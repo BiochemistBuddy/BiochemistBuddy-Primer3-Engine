@@ -35,6 +35,13 @@ docker build -t biochemistbuddy-primer3-engine .
 
 All automated tests use synthetic DNA fixtures.
 
+## Container
+
+Every commit to `main` publishes multi-architecture `main` and `sha-...` images
+to `ghcr.io/biochemistbuddy/biochemistbuddy-primer3-engine`. Tags beginning with
+`v` additionally publish semantic-version tags. Customer deployments should pin
+an immutable image digest rather than a moving tag.
+
 ## License
 
 This repository is licensed under GPLv2 only. It includes and links to
