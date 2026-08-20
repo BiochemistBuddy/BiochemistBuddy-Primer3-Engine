@@ -28,6 +28,7 @@ def _token(*, customer_id: str = "tenant-demo", scopes: tuple[str, ...]) -> str:
 
 def test_engine_requires_authentication() -> None:
     assert TestClient(app).post("/v1/design/pcr", json={}).status_code == 401
+    assert TestClient(app).post("/v1/design/internal-oligo", json={}).status_code == 401
 
 
 def test_engine_rejects_cross_customer_token(monkeypatch) -> None:
