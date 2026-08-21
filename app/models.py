@@ -41,6 +41,13 @@ class DesignEnvelope(BaseModel):
     rule_set: dict[str, Any]
 
 
+class InternalOligoDesignEnvelope(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    request: DesignRequest
+    constraints: dict[str, Any]
+
+
 class Thermodynamics(BaseModel):
     left_hairpin_delta_g_kcal_per_mol: float
     left_homodimer_delta_g_kcal_per_mol: float
@@ -77,5 +84,31 @@ class DesignResult(BaseModel):
     sequence_id: str
     pairs: list[PrimerPair]
     rejected_pair_count: int
+    primer3_explanations: dict[str, str]
+    provenance: ResultProvenance
+
+
+class InternalOligoThermodynamics(BaseModel):
+    hairpin_delta_g_kcal_per_mol: float
+    homodimer_delta_g_kcal_per_mol: float
+    left_heterodimer_delta_g_kcal_per_mol: float
+    right_heterodimer_delta_g_kcal_per_mol: float
+
+
+class InternalOligoCandidate(BaseModel):
+    rank: int
+    left: Primer
+    right: Primer
+    internal: Primer
+    product_size_bases: int
+    penalty: float
+    primer_thermodynamics: Thermodynamics
+    internal_thermodynamics: InternalOligoThermodynamics
+
+
+class InternalOligoDesignResult(BaseModel):
+    sequence_id: str
+    candidates: list[InternalOligoCandidate]
+    rejected_candidate_count: int
     primer3_explanations: dict[str, str]
     provenance: ResultProvenance
